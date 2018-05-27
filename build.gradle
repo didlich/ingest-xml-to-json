@@ -43,6 +43,7 @@ esplugin {
 // they are just here as an example
 dependencies {
   compile 'org.elasticsearch:elasticsearch:6.2.4'
+  compile group: 'org.json', name: 'json', version: '20180130'
 
   testCompile 'org.elasticsearch.test:framework:6.2.4'
 }

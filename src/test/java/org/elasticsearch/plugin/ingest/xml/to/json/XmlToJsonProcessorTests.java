@@ -31,7 +31,11 @@ public class XmlToJsonProcessorTests extends ESTestCase {
 
     public void testThatProcessorWorks() throws Exception {
         Map<String, Object> document = new HashMap<>();
-        document.put("source_field", "fancy source field content");
+
+        String TEST_XML_STRING = "<?xml version=\"1.0\" ?><person id=\"4711\">max mustermann</person>";
+
+        String TEST_JSON_STRING = "{\"person\":{\"id\":4711,\"content\":\"max mustermann\"}}";
+        document.put("source_field", TEST_XML_STRING);
         IngestDocument ingestDocument = RandomDocumentPicks.randomIngestDocument(random(), document);
 
         XmlToJsonProcessor processor = new XmlToJsonProcessor(randomAlphaOfLength(10), "source_field", "target_field");
@@ -39,7 +43,7 @@ public class XmlToJsonProcessorTests extends ESTestCase {
         Map<String, Object> data = ingestDocument.getSourceAndMetadata();
 
         assertThat(data, hasKey("target_field"));
-        assertThat(data.get("target_field"), is("fancy source field content"));
+        assertThat(data.get("target_field"), is(TEST_JSON_STRING));
         // TODO add fancy assertions here
     }
 }

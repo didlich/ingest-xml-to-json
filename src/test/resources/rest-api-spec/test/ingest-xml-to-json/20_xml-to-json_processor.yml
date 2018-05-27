@@ -23,13 +23,13 @@
         type: test
         id: 1
         pipeline: "my_pipeline"
-        body: {field1: "my_value"}
+        body: {field1: "<?xml version=\"1.0\" ?><person id=\"4711\">max mustermann</person>"}
 
   - do:
       get:
         index: test
         type: test
         id: 1
-  - match: { _source.field1: "my_value" }
-  - match: { _source.field2: "my_value" }
+  - match: { _source.field1: "<?xml version=\"1.0\" ?><person id=\"4711\">max mustermann</person>" }
+  - match: { _source.field2: "{\"person\":{\"id\":4711,\"content\":\"max mustermann\"}}" }
 

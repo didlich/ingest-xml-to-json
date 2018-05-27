@@ -20,6 +20,8 @@ package org.elasticsearch.plugin.ingest.xml.to.json;
 import org.elasticsearch.ingest.AbstractProcessor;
 import org.elasticsearch.ingest.IngestDocument;
 import org.elasticsearch.ingest.Processor;
+import org.json.JSONObject;
+import org.json.XML;
 
 import java.io.IOException;
 import java.util.Map;
@@ -42,8 +44,11 @@ public class XmlToJsonProcessor extends AbstractProcessor {
     @Override
     public void execute(IngestDocument ingestDocument) throws Exception {
         String content = ingestDocument.getFieldValue(field, String.class);
-        // TODO implement me!
-        ingestDocument.setFieldValue(targetField, content);
+
+        JSONObject xmlJSONObj = XML.toJSONObject(content);
+        String jsonString = xmlJSONObj.toString();
+
+        ingestDocument.setFieldValue(targetField, jsonString);
     }
 
     @Override
